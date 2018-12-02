@@ -42,9 +42,9 @@ class ccflags(object):
                 flagsOfInterest.append(f)
         self.files[cF] = flagsOfInterest
 
-    def parseVerbMakeOut(self):
+    def parseVerbMakeOut(self, fname):
         self.files = {}
-        with open('verb_make_out','r') as f:
+        with open(fname,'r') as f:
             lines = f.read().splitlines()
         for l in lines:
             fl = self.processMakeLine(l)
@@ -62,7 +62,9 @@ class ccflags(object):
     def on_bufenter(self, filename):
         self.log('== ccflags is in ' + filename)
         # Stupid to do this every time..
-        self.parseVerbMakeOut()
+        fname = 'verb_make_out'
+        if os.path.isfile(fname):
+            self.parseVerbMakeOut(fname)
         self.log('== flags ==')
         if filename in self.files:
             for i in self.files[filename]:
