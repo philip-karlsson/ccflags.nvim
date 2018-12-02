@@ -65,6 +65,8 @@ class ccflags(object):
         fname = 'verb_make_out'
         if os.path.isfile(fname):
             self.parseVerbMakeOut(fname)
+        else:
+            return
         self.log('== flags ==')
         if filename in self.files:
             for i in self.files[filename]:
